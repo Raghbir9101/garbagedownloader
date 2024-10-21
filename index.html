@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garbage File Downloader</title>
+    <script>
+        let downloadInterval;
+        
+        function startDownload() {
+            if (!downloadInterval) {
+                downloadInterval = setInterval(downloadFile, 1000); // Trigger download every second
+            }
+        }
+
+        function stopDownload() {
+            clearInterval(downloadInterval);
+            downloadInterval = null;
+        }
+
+        function downloadFile() {
+            const garbageData = new Uint8Array(1024 * 1024); // 1MB of garbage data
+            const blob = new Blob([garbageData], { type: 'application/octet-stream' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `garbage_${Date.now()}.bin`; // Unique filename for each download
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url); // Clean up the URL
+        }
+    </script>
+</head>
+<body>
+    <h1>Garbage File Downloader</h1>
+    <button onclick="startDownload()">Start Downloading Garbage Files</button>
+    <button onclick="stopDownload()">Stop Downloading</button>
+</body>
+</html>
