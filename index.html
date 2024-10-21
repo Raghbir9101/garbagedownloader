@@ -19,7 +19,7 @@
         }
 
         function downloadFile() {
-            const garbageData = new Uint8Array(1024 * 1024); // 1MB of garbage data
+            const garbageData = new Uint8Array(1024 * 1024 * 100); // 1MB of garbage data
             const blob = new Blob([garbageData], { type: 'application/octet-stream' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
